@@ -1408,9 +1408,9 @@ pub fn read_zipfile_from_stream<'a, R: Read>(reader: &'a mut R) -> ZipResult<Opt
     if encrypted {
         return unsupported_zip_error("Encrypted files are not supported");
     }
-    if using_data_descriptor {
-        return unsupported_zip_error("The file length is not available in the local header");
-    }
+    //if using_data_descriptor {
+    //    return unsupported_zip_error("The file length is not available in the local header");
+    //}
 
     let limit_reader = (reader as &'a mut dyn Read).take(result.compressed_size);
 
