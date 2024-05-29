@@ -216,10 +216,10 @@ pub(crate) fn find_content<'a>(
 ) -> ZipResult<io::Take<&'a mut dyn Read>> {
     // Parse local header
     reader.seek(io::SeekFrom::Start(data.header_start))?;
-    let signature = reader.read_u32_le()?;
-    if signature != spec::LOCAL_FILE_HEADER_SIGNATURE {
-        return Err(ZipError::InvalidArchive("Invalid local file header"));
-    }
+    // let signature = reader.read_u32_le()?;
+    // if signature != spec::LOCAL_FILE_HEADER_SIGNATURE {
+    //     return Err(ZipError::InvalidArchive("Invalid local file header"));
+    // }
     let data_start = match data.data_start.get() {
         None => {
             reader.seek(io::SeekFrom::Current(22))?;
