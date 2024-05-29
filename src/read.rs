@@ -1335,13 +1335,13 @@ impl<'a> Drop for ZipFile<'a> {
 /// * `data_start`: set to 0
 /// * `external_attributes`: `unix_mode()`: will return None
 pub fn read_zipfile_from_stream<'a, R: Read>(reader: &'a mut R) -> ZipResult<Option<ZipFile<'_>>> {
-    let signature = reader.read_u32_le()?;
-
-    match signature {
-        spec::LOCAL_FILE_HEADER_SIGNATURE => (),
-        spec::CENTRAL_DIRECTORY_HEADER_SIGNATURE => return Ok(None),
-        _ => return Err(ZipError::InvalidArchive("Invalid local file header")),
-    }
+    // let signature = reader.read_u32_le()?;
+    //
+    // match signature {
+    //     spec::LOCAL_FILE_HEADER_SIGNATURE => (),
+    //     spec::CENTRAL_DIRECTORY_HEADER_SIGNATURE => return Ok(None),
+    //     _ => return Err(ZipError::InvalidArchive("Invalid local file header")),
+    // }
 
     let version_made_by = reader.read_u16_le()?;
     let flags = reader.read_u16_le()?;
