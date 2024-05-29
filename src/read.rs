@@ -216,10 +216,10 @@ pub(crate) fn find_content<'a>(
 ) -> ZipResult<io::Take<&'a mut dyn Read>> {
     // Parse local header
     reader.seek(io::SeekFrom::Start(data.header_start))?;
-    // let signature = reader.read_u32_le()?;
-    // if signature != spec::LOCAL_FILE_HEADER_SIGNATURE {
-    //     return Err(ZipError::InvalidArchive("Invalid local file header"));
-    // }
+    let signature = reader.read_u32_le()?;
+    if signature != spec::LOCAL_FILE_HEADER_SIGNATURE {
+        return Err(ZipError::InvalidArchive("Invalid local file header"));
+    }
     let data_start = match data.data_start.get() {
         None => {
             reader.seek(io::SeekFrom::Current(22))?;
@@ -249,12 +249,12 @@ pub(crate) fn make_crypto_reader<'a>(
     aes_info: Option<(AesMode, AesVendorVersion, CompressionMethod)>,
     #[cfg(feature = "aes-crypto")] compressed_size: u64,
 ) -> ZipResult<CryptoReader<'a>> {
-    // #[allow(deprecated)]
-    // {
-    //     if let CompressionMethod::Unsupported(_) = compression_method {
-    //         return unsupported_zip_error("Compression method not supported");
-    //     }
-    // }
+    #[allow(deprecated)]
+    {
+        if let CompressionMethod::Unsupported(_) = compression_method {
+            return unsupported_zip_error("Compression method not supported");
+        }
+    }
 
     let reader = match (password, aes_info) {
         #[cfg(not(feature = "aes-crypto"))]
@@ -1405,9 +1405,9 @@ pub fn read_zipfile_from_stream<'a, R: Read>(reader: &'a mut R) -> ZipResult<Opt
         Err(e) => return Err(e),
     }
 
-    // if encrypted {
-    //     return unsupported_zip_error("Encrypted files are not supported");
-    // }
+    if encrypted {
+        return unsupported_zip_error("Encrypted files are not supported");
+    }
     //if using_data_descriptor {
     //    return unsupported_zip_error("The file length is not available in the local header");
     //}
