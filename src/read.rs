@@ -1399,7 +1399,7 @@ pub fn read_zipfile_from_stream<'a, R: Read>(reader: &'a mut R) -> ZipResult<Opt
         aes_extra_data_start: 0,
         extra_fields: Vec::new(),
     };
-    println!("Compression method is {:?}", compression_method);
+    println!("Compression method for file {:?} is {:?}", file_name, compression_method);
 
     match parse_extra_field(&mut result) {
         Ok(..) | Err(ZipError::Io(..)) => {}
