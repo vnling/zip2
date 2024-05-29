@@ -1340,7 +1340,7 @@ pub fn read_zipfile_from_stream<'a, R: Read>(reader: &'a mut R) -> ZipResult<Opt
     match signature {
         spec::LOCAL_FILE_HEADER_SIGNATURE => (),
         spec::CENTRAL_DIRECTORY_HEADER_SIGNATURE => return Ok(None),
-        _ => return Err(ZipError::InvalidArchive("Invalid local file header")),
+        _ => (),
     }
 
     let version_made_by = reader.read_u16_le()?;
