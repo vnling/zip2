@@ -1405,9 +1405,9 @@ pub fn read_zipfile_from_stream<'a, R: Read>(reader: &'a mut R) -> ZipResult<Opt
         Err(e) => return Err(e),
     }
 
-    if encrypted {
-        return unsupported_zip_error("Encrypted files are not supported");
-    }
+    // if encrypted {
+    //     return unsupported_zip_error("Encrypted files are not supported");
+    // }
     //if using_data_descriptor {
     //    return unsupported_zip_error("The file length is not available in the local header");
     //}
