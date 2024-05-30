@@ -1379,7 +1379,7 @@ pub fn read_zipfile_from_stream<'a, R: Read>(reader: &'a mut R) -> ZipResult<Opt
         crc32,
         compressed_size: compressed_size as u64,
         uncompressed_size: uncompressed_size as u64,
-        file_name,
+        file_name: file_name.clone(),
         file_name_raw: file_name_raw.into(),
         extra_field: Some(Arc::new(extra_field)),
         central_extra_field: None,
